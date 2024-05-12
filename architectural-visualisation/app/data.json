@@ -1,0 +1,1261 @@
+{
+  "frontend": {
+    "files": {
+      "/App.js": [
+        "getUserDetails",
+        "hasBookmarksInPipelineToReview",
+        "getUserPreferences"
+      ],
+      "/MainAppRouter.js": ["getUserPreferences"],
+      "/api/activityLogging.js": ["logUserActivity"],
+      "/api/userInterests.js": [
+        "getAvailableTopics",
+        "getSubscribedTopics",
+        "getFilteredTopics"
+      ],
+      "/articles/ArticleHistory.js": ["getOwnTexts"],
+      "/articles/BookmarkedArticles.js": ["getBookmarkedArticles"],
+      "/articles/ClassroomArticles.js": ["getStudent", "getCohortArticles"],
+      "/articles/FindArticles.js": [
+        "logUserActivity",
+        "getUserArticles",
+        "search"
+      ],
+      "/articles/OwnArticles.js": ["getSavedUserArticles"],
+      "/articles/SearchField.js": ["logUserActivity"],
+      "/articles/SmallSaveArticleButton.js": [
+        "makePersonalCopy",
+        "removePersonalCopy"
+      ],
+      "/articles/TagsOfFilters.js": [
+        "getFilteredTopics",
+        "getSubscribedFilterSearches",
+        "subscribeToFilter",
+        "subscribeToSearchFilter",
+        "unsubscribeFromSearchFilter",
+        "unsubscribeFromFilter"
+      ],
+      "/components/SideBar.js": ["hasBookmarksInPipelineToReview"],
+      "/components/redirect_notification/MobileNotification.js": [
+        "makePersonalCopy"
+      ],
+      "/components/redirect_notification/UnsupportedNotification.js": [
+        "makePersonalCopy"
+      ],
+      "/exercises/Congratulations.js": ["logUserActivity"],
+      "/exercises/Exercises.js": [
+        "getUserBookmarksToStudy",
+        "getNewBookmarksToStudy",
+        "getTotalBookmarksInPipeline",
+        "hasBookmarksInPipelineToReview",
+        "uploadExerciseFeedback",
+        "startLoggingExerciseSessionToDB",
+        "updateExerciseSession",
+        "reportExerciseSessionEnd",
+        "getArticleInfo",
+        "getUserPreferences",
+        "bookmarksToStudyForArticle"
+      ],
+      "/exercises/ExercisesForArticle.js": ["logReaderActivity"],
+      "/exercises/ExercisesRouter.js": ["logReaderActivity"],
+      "/exercises/OutOfWordsMessage.js": ["getNewBookmarksToStudy"],
+      "/exercises/exerciseTypes/findWordInContextCloze/FindWordInContextCloze.js": [
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/match/Match.js": [
+        "uploadExerciseFinalizedData"
+      ],
+      "/exercises/exerciseTypes/multipleChoice/MultipleChoice.js": [
+        "uploadExerciseFinalizedData",
+        "wordsSimilarTo",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/multipleChoiceAudio/MultipleChoiceAudio.js": [
+        "logUserActivity",
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/multipleChoiceContext/MultipleChoiceContext.js": [
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/multipleChoiceL2toL1/MultipleChoiceL2toL1.js": [
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/orderWords/OrderWords.js": [
+        "logUserActivity",
+        "uploadExerciseFinalizedData",
+        "getConfusionWords",
+        "annotateClues",
+        "getSmallerContext",
+        "basicTranlsate",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/spellWhatYouHear/SpellWhatYouHear.js": [
+        "logUserActivity",
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/translateL2toL1/TranslateL2toL1.js": [
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/translateWhatYouHear/TranslateWhatYouHear.js": [
+        "logUserActivity",
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/exercises/exerciseTypes/wordInContextExercises/WordInContextExercise.js": [
+        "uploadExerciseFinalizedData",
+        "getArticleInfo"
+      ],
+      "/hooks/useSelectInterest.js": [
+        "getAvailableTopics",
+        "getSubscribedTopics",
+        "getSubscribedSearchers",
+        "subscribeToTopic",
+        "unsubscribeFromTopic",
+        "subscribeToSearch",
+        "unsubscribeFromSearch"
+      ],
+      "/pages/CreateAccount.js": ["getUserDetails", "addBasicUser"],
+      "/pages/ExtensionInstalled.js": ["logUserActivity"],
+      "/pages/LanguagePreferences.js": ["saveUserDetails", "modifyCEFRlevel"],
+      "/pages/ResetPasswordStep1.js": ["sendCode"],
+      "/pages/ResetPasswordStep2.js": ["resetPassword"],
+      "/pages/Settings.js": [
+        "getUserDetails",
+        "joinCohort",
+        "getStudent",
+        "getCohortName",
+        "saveUserDetails",
+        "modifyCEFRlevel",
+        "getUserPreferences",
+        "saveUserPreferences"
+      ],
+      "/pages/SignIn.js": ["getUserDetails", "signIn"],
+      "/reader/ArticleReader.js": [
+        "logReaderActivity",
+        "uploadOwnText",
+        "readingSessionCreate",
+        "readingSessionUpdate",
+        "getArticleInfo",
+        "setArticleInfo",
+        "setArticleOpened",
+        "submitArticleDifficultyFeedback"
+      ],
+      "/reader/InteractiveText.js": [
+        "logReaderActivity",
+        "getOneTranslation",
+        "getMultipleTranslations",
+        "updateBookmark"
+      ],
+      "/reader/LinkedWordListClass.js": ["deleteBookmark"],
+      "/reader/ReportBroken.js": ["logReaderActivity"],
+      "/reader/SoundPlayer.js": ["getLinkToFullArticleReadout"],
+      "/reader/TopToolbar.js": ["uploadOwnText", "getArticleInfo"],
+      "/speech/APIBasedSpeech.js": ["getLinkToFullArticleReadout"],
+      "/speech/DeprecatedZeeguuSpeech.js": ["getLinkToFullArticleReadout"],
+      "/teacher/myClassesPage/cohortsPage/AddTeacherDialog.js": [
+        "addColleagueToCohort"
+      ],
+      "/teacher/myClassesPage/cohortsPage/Home.js": ["getCohortsInfo"],
+      "/teacher/myClassesPage/cohortsPage/StudentInfoLine.js": [
+        "getStudentActivityOverview"
+      ],
+      "/teacher/myClassesPage/cohortsPage/StudentsActivityOverview.js": [
+        "getCohortsInfo",
+        "getStudents",
+        "removeStudentFromCohort"
+      ],
+      "/teacher/myClassesPage/exercisesPage/LearnedWordsList.js": [
+        "getLearnedWords"
+      ],
+      "/teacher/myClassesPage/exercisesPage/NonStudiedWordsList.js": [
+        "getNonStudiedWords"
+      ],
+      "/teacher/myClassesPage/exercisesPage/PractisedWordsList.js": [
+        "getExerciseHistory"
+      ],
+      "/teacher/myClassesPage/exercisesPage/StudentExercisesInsights.js": [
+        "getStudentInfo",
+        "getStudentActivityOverview"
+      ],
+      "/teacher/myClassesPage/readingPage/StudentReadingInsights.js": [
+        "getStudentInfo",
+        "getReadingSessions",
+        "getStudentActivityOverview",
+        "getCohortsInfo"
+      ],
+      "/teacher/myTextsPage/AddToCohortDialog.js": [
+        "getCohortFromArticle",
+        "getCohortsInfo",
+        "addArticleToCohort",
+        "deleteArticleFromCohort"
+      ],
+      "/teacher/myTextsPage/AddURLDialog.js": [
+        "uploadOwnText",
+        "parseArticleFromUrl"
+      ],
+      "/teacher/myTextsPage/AllTexts.js": ["getTeacherTexts"],
+      "/teacher/myTextsPage/EditText.js": [
+        "uploadOwnText",
+        "updateOwnText",
+        "deleteOwnText",
+        "getArticleInfo"
+      ],
+      "/teacher/myTextsPage/ShareWithColleagueDialog.js": [
+        "shareTextWithColleague"
+      ],
+      "/teacher/_routing/_ActivityInsightsRouter.js": [
+        "getStudentInfo",
+        "getCohortName"
+      ],
+      "/userDashboard/UserDashboard.js": [
+        "logUserActivity",
+        "getUserActivityByDay",
+        "getBookmarksCountsByDate"
+      ],
+      "/words/EditButton.js": ["updateBookmark"],
+      "/words/Learned.js": ["learnedBookmarks"],
+      "/words/Productive.js": ["getUserBookmarksInPipeline"],
+      "/words/Receptive.js": ["getUserBookmarksInPipeline"],
+      "/words/Starred.js": ["starredBookmarks"],
+      "/words/Top.js": ["topBookmarks"],
+      "/words/Word.js": [
+        "logReaderActivity",
+        "unstarBookmark",
+        "starBookmark",
+        "deleteBookmark"
+      ],
+      "/words/WordHistory.js": ["getBookmarksByDay"],
+      "/words/WordsForArticle.js": [
+        "logReaderActivity",
+        "getArticleInfo",
+        "bookmarksForArticle"
+      ]
+    },
+    "api_calls": {
+      "logReaderActivity": "/upload_user_activity_data",
+      "getUserDetails": "/get_user_details",
+      "addUser": "/add_user/VAR",
+      "addBasicUser": "/add_basic_user/VAR",
+      "signIn": "/session/VAR",
+      "sendCode": "/send_code/VAR",
+      "resetPassword": "/reset_password/VAR",
+      "logUserActivity": "/upload_user_activity_data",
+      "getUserBookmarksToStudy": "/bookmarks_to_study/VAR",
+      "getUserBookmarksInPipeline": "/bookmarks_in_pipeline",
+      "getNewBookmarksToStudy": "/new_bookmarks_to_study/VAR",
+      "getTotalBookmarksInPipeline": "/get_total_bookmarks_in_pipeline",
+      "hasBookmarksInPipelineToReview": "/has_bookmarks_in_pipeline_to_review",
+      "uploadExerciseFeedback": "/report_exercise_outcome",
+      "uploadExerciseFinalizedData": "/report_exercise_outcome",
+      "wordsSimilarTo": "/similar_words/VAR",
+      "getConfusionWords": "/create_confusion_words",
+      "annotateClues": "/annotate_clues",
+      "getShorterSimilarSentsInArticle": "/get_shorter_similar_sents_in_article",
+      "getSmallerContext": "/get_smaller_context",
+      "startLoggingExerciseSessionToDB": "/exercise_session_start",
+      "updateExerciseSession": "/exercise_session_update",
+      "reportExerciseSessionEnd": "/exercise_session_end",
+      "isFeatureEnabled": "/is_feature_enabled/VAR",
+      "uploadOwnText": "/upload_own_text",
+      "updateOwnText": "/update_own_text/VAR",
+      "deleteOwnText": "/delete_own_text/VAR",
+      "getOwnTexts": "/own_texts",
+      "shareTextWithColleague": "/send_article_to_colleague",
+      "readingSessionCreate": "/reading_session_start",
+      "readingSessionUpdate": "/reading_session_update",
+      "readingSessionEnd": "/reading_session_start",
+      "getLinkToFullArticleReadout": "/mp3_of_full_article",
+      "joinCohort": "/join_cohort",
+      "getStudent": "/student_info",
+      "loadUserInfo": "/user_info/VAR/VAR",
+      "getStudentInfo": "/user_info",
+      "getReadingSessions": "/student_reading_sessions",
+      "getExerciseHistory": "/student_exercise_history",
+      "getLearnedWords": "/student_learned_words",
+      "getNonStudiedWords": "/student_words_not_studied",
+      "getStudentActivityOverview": "/student_activity_overview",
+      "isTeacher": "/is_teacher",
+      "getTeacherTexts": "/teacher_texts",
+      "addColleagueToCohort": "/add_colleague_to_cohort",
+      "getCohortFromArticle": "/get_cohorts_for_article/VAR",
+      "getCohortsInfo": "/cohorts_info",
+      "addArticleToCohort": "/add_article_to_cohort",
+      "deleteArticleFromCohort": "/delete_article_from_cohort",
+      "getStudents": "/users_from_cohort/VAR/VAR",
+      "getCohortName": "/cohort_name/VAR",
+      "parseArticleFromUrl": "/parse_url",
+      "removeStudentFromCohort": "/remove_user_from_cohort/VAR",
+      "getOneTranslation": "/get_one_translation/VAR/VAR",
+      "getMultipleTranslations": "/get_multiple_translations/VAR/VAR",
+      "contributeTranslation": "/contribute_translation/VAR/VAR",
+      "updateBookmark": "/update_bookmark/VAR",
+      "basicTranlsate": "/basic_translate/VAR/VAR",
+      "getUserArticles": "/user_articles/recommended",
+      "getSavedUserArticles": "/user_articles/saved",
+      "search": "/search/VAR",
+      "getBookmarkedArticles": "/user_articles/starred_or_liked",
+      "getCohortArticles": "/cohort_articles",
+      "getArticleInfo": "/user_article",
+      "setArticleInfo": "/user_article",
+      "setArticleOpened": "/article_opened",
+      "findOrCreateArticle": "/find_or_create_article",
+      "makePersonalCopy": "/make_personal_copy",
+      "removePersonalCopy": "/remove_personal_copy",
+      "isArticleLanguageSupported": "/is_article_language_supported",
+      "sendFeedback": "/send_feedback",
+      "submitArticleDifficultyFeedback": "/article_difficulty_feedback",
+      "saveUserDetails": "/user_settings",
+      "modifyCEFRlevel": "/user_languages/modify",
+      "getUserPreferences": "/user_preferences",
+      "saveUserPreferences": "/save_user_preferences",
+      "getAvailableTopics": "/available_topics",
+      "getSubscribedTopics": "/subscribed_topics",
+      "getSubscribedSearchers": "/subscribed_searches",
+      "subscribeToTopic": "/subscribe_topic",
+      "unsubscribeFromTopic": "/unsubscribe_topic",
+      "subscribeToSearch": "/subscribe_search/VAR",
+      "unsubscribeFromSearch": "/unsubscribe_search",
+      "getFilteredTopics": "/filtered_topics",
+      "getSubscribedFilterSearches": "/filtered_searches",
+      "subscribeToFilter": "/filter_topic",
+      "subscribeToSearchFilter": "/filter_search/VAR",
+      "unsubscribeFromSearchFilter": "/unfilter_search",
+      "unsubscribeFromFilter": "/unfilter_topic",
+      "getUserActivityByDay": "/activity_by_day",
+      "getBookmarksByDay": "/bookmarks_by_day/VAR",
+      "getBookmarksCountsByDate": "/bookmark_counts_by_date",
+      "starredBookmarks": "/starred_bookmarks/VAR",
+      "learnedBookmarks": "/learned_bookmarks/VAR",
+      "topBookmarks": "/top_bookmarks/VAR",
+      "bookmarksForArticle": "/bookmarks_for_article/VAR",
+      "bookmarksToStudyForArticle": "/bookmarks_to_study_for_article/VAR",
+      "unstarBookmark": "/unstar_bookmark/VAR",
+      "starBookmark": "/star_bookmark/VAR",
+      "deleteBookmark": "/delete_bookmark/VAR"
+    }
+  },
+  "backend": {
+    "files": {
+      "accounts.py": [
+        "/add_user/VAR",
+        "/add_basic_user/VAR",
+        "/add_anon_user",
+        "/send_code/VAR",
+        "/reset_password/VAR"
+      ],
+      "activity_tracking.py": ["/upload_user_activity_data"],
+      "article.py": [
+        "/find_or_create_article",
+        "/make_personal_copy",
+        "/remove_personal_copy",
+        "/is_article_language_supported"
+      ],
+      "bookmarks_and_words.py": [
+        "/user_words",
+        "/top_bookmarks/VAR",
+        "/learned_bookmarks/VAR",
+        "/starred_bookmarks/VAR",
+        "/bookmarks_by_day/VAR",
+        "/bookmarks_by_day",
+        "/bookmarks_for_article/VAR/VAR",
+        "/bookmarks_to_study_for_article/VAR",
+        "/bookmarks_for_article/VAR",
+        "/delete_bookmark/VAR",
+        "/report_correct_mini_exercise/VAR",
+        "/star_bookmark/VAR",
+        "/unstar_bookmark/VAR"
+      ],
+      "exercises.py": [
+        "/bookmarks_to_study/VAR",
+        "/bookmarks_in_pipeline",
+        "/has_bookmarks_in_pipeline_to_review",
+        "/new_bookmarks_to_study/VAR",
+        "/get_total_bookmarks_in_pipeline",
+        "/get_exercise_log_for_bookmark/VAR",
+        "/report_exercise_outcome",
+        "/similar_words/VAR"
+      ],
+      "exercise_sessions.py": [
+        "/exercise_session_start",
+        "/exercise_session_update",
+        "/exercise_session_end",
+        "/exercise_session_info/VAR"
+      ],
+      "feature_toggles.py": ["/is_feature_enabled/VAR"],
+      "nlp.py": [
+        "/do_some_spacy",
+        "/create_confusion_words",
+        "/annotate_clues",
+        "/get_shorter_similar_sents_in_article",
+        "/get_smaller_context"
+      ],
+      "own_texts.py": [
+        "/upload_own_text",
+        "/own_texts",
+        "/delete_own_text/VAR",
+        "/update_own_text/VAR"
+      ],
+      "reading_sessions.py": [
+        "/reading_session_start",
+        "/reading_session_update",
+        "/reading_session_end",
+        "/reading_session_info/VAR"
+      ],
+      "search.py": [],
+      "sessions.py": [
+        "/session/VAR",
+        "/get_anon_session/VAR",
+        "/validate",
+        "/is_up",
+        "/logout_session"
+      ],
+      "speech.py": ["/text_to_speech", "/mp3_of_full_article"],
+      "student.py": [
+        "/basic_user_info/VAR",
+        "/user_info",
+        "/cohort_member_bookmarks",
+        "/cohort_member_bookmarks/VAR/VAR",
+        "/user_info/VAR/VAR"
+      ],
+      "system_languages.py": [
+        "/system_languages",
+        "/available_languages",
+        "/available_native_languages",
+        "/ping"
+      ],
+      "topics.py": ["/available_topics"],
+      "translation.py": [
+        "/get_one_translation/VAR/VAR",
+        "/get_multiple_translations/VAR/VAR",
+        "/update_bookmark/VAR",
+        "/contribute_translation/VAR/VAR",
+        "/basic_translate/VAR/VAR"
+      ],
+      "user.py": [
+        "/learned_language",
+        "/learned_language/VAR",
+        "/native_language",
+        "/native_language/VAR",
+        "/learned_and_native_language",
+        "/get_user_details",
+        "/user_settings",
+        "/send_feedback"
+      ],
+      "user_article.py": [
+        "/user_article",
+        "/article_difficulty_feedback",
+        "/article_opened",
+        "/user_article",
+        "/parse_html",
+        "/parse_url"
+      ],
+      "user_articles.py": [
+        "/user_articles/recommended/VAR",
+        "/user_articles/saved",
+        "/user_articles/topic_filtered",
+        "/user_articles/starred_or_liked",
+        "/cohort_articles"
+      ],
+      "user_languages.py": [],
+      "user_preferences.py": ["/user_preferences", "/save_user_preferences"],
+      "user_statistics.py": ["/bookmark_counts_by_date", "/activity_by_day"],
+      "activity_sessions.py": [],
+      "article_management.py": [
+        "/send_article_to_colleague",
+        "/add_article_to_cohort",
+        "/upload_articles/VAR",
+        "/get_cohorts_for_article/VAR",
+        "/delete_article_from_cohort",
+        "/remove_article_from_cohort/VAR/VAR",
+        "/cohort_files/VAR",
+        "/teacher_texts"
+      ],
+      "cohorts.py": [
+        "/remove_cohort/VAR",
+        "/create_own_cohort",
+        "/update_cohort/VAR",
+        "/users_from_cohort/VAR/VAR",
+        "/cohorts_info",
+        "/cohort_info/VAR",
+        "/add_colleague_to_cohort",
+        "/remove_user_from_cohort/VAR"
+      ],
+      "general.py": [
+        "/is_teacher",
+        "/has_permission_for_cohort/VAR",
+        "/has_permission_for_user_info/VAR",
+        "/users_by_teacher/VAR",
+        "/invite_code_usable/VAR"
+      ],
+      "helpers.py": [],
+      "student_exercises.py": [
+        "/student_exercise_correctness",
+        "/student_exercise_history"
+      ],
+      "student_overviews.py": ["/student_activity_overview"],
+      "student_readings.py": ["/student_reading_sessions"],
+      "student_words.py": [
+        "/student_words_not_studied",
+        "/student_learned_words"
+      ]
+    },
+    "modules": {
+      "zeeguu.core.model": [
+        "UserReadingSession",
+        "db",
+        "Bookmark",
+        "Text",
+        "UserExerciseSession",
+        "Session",
+        "Cohort",
+        "TeacherCohortMap",
+        "Article",
+        "Topic",
+        "Url",
+        "TopicSubscription",
+        "TopicFilter",
+        "Language",
+        "ExerciseSource",
+        "LocalizedTopic",
+        "UserArticle",
+        "UserPreference",
+        "PersonalCopy",
+        "CohortArticleMap",
+        "Teacher",
+        "User",
+        "UserActivityData",
+        "ExerciseOutcome"
+      ],
+      "zeeguu.api.utils.abort_handling": ["make_error"],
+      "zeeguu.api.endpoints": ["api", "db_session"],
+      "zeeguu.logging": ["log"],
+      "zeeguu.api.endpoints.sessions": ["get_anon_session"],
+      "zeeguu.core.model.unique_code": ["UniqueCode"],
+      "zeeguu.core.user_activity_hooks.article_interaction_hooks": [
+        "distill_article_interactions"
+      ],
+      "zeeguu.api.utils": ["json_result"],
+      "zeeguu.core.model.personal_copy": ["PersonalCopy"],
+      "zeeguu.core.model.article": ["HTML_TAG_CLEANR"],
+      "zeeguu.api.utils.json_result": ["json_result"],
+      "zeeguu.core.bookmark_quality": ["top_bookmarks"],
+      "zeeguu.core.exercises.similar_words": ["similar_words"],
+      "zeeguu.api.endpoints.helpers.activity_sessions": [
+        "update_activity_session"
+      ],
+      "zeeguu.core.emailer.user_activity": [
+        "send_user_finished_exercise_session"
+      ],
+      "zeeguu.core.nlp_pipeline": [
+        "AutoGECTagging",
+        "ContextReducer",
+        "NoiseWordsGenerator",
+        "SpacyWrappers"
+      ],
+      "zeeguu.api.utils.route_wrappers": ["with_session", "cross_domain"],
+      "zeeguu.api.utils.translator": ["contribute_trans", "get_next_results"],
+      "zeeguu.core.crowd_translations": ["get_own_past_translation"],
+      "zeeguu.core.model.user_word": ["UserWord"],
+      "zeeguu.api.endpoints.feature_toggles": ["features_for_user"],
+      "zeeguu.core.model.article_difficulty_feedback": [
+        "ArticleDifficultyFeedback"
+      ],
+      "zeeguu.core.content_recommender": [
+        "topic_filter_for_user",
+        "article_recommendations_for_user"
+      ],
+      "zeeguu.core.user_statistics.activity": ["activity_duration_by_day"],
+      "zeeguu.core.model.cohort_article_map": ["CohortArticleMap"],
+      "zeeguu.api.endpoints.teacher_dashboard._permissions": [
+        "check_permission_for_user",
+        "check_permission_for_cohort",
+        "has_permission_for_cohort",
+        "is_teacher"
+      ],
+      "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters": [
+        "_get_student_cohort_and_period_from_POST_params",
+        "_convert_number_of_days_to_date_interval"
+      ],
+      "zeeguu.api.endpoints.teacher_dashboard.helpers": [
+        "student_info_for_teacher_dashboard",
+        "get_cohort_info",
+        "all_user_info_from_cohort"
+      ],
+      "zeeguu.api.teacher_dashboard": ["api"],
+      "zeeguu.core.user_statistics.exercise_corectness": [
+        "exercise_outcome_stats"
+      ],
+      "zeeguu.core.sql.learner.exercises_history": [
+        "exercises_grouped_by_word"
+      ],
+      "zeeguu.core.user_statistics.student_overview": [
+        "student_activity_overview"
+      ],
+      "zeeguu.core.user_statistics.reading_sessions": ["reading_sessions"],
+      "zeeguu.core.sql.learner.words": ["words_not_studied", "learned_words"]
+    },
+    "endpoint_imports": {
+      "/add_user/VAR": [
+        ["zeeguu.core.model", "Session"],
+        ["zeeguu.api.utils.abort_handling", "make_error"],
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.logging", "log"]
+      ],
+      "/add_basic_user/VAR": [
+        ["zeeguu.core.model", "Session"],
+        ["zeeguu.api.utils.abort_handling", "make_error"],
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.logging", "log"]
+      ],
+      "/add_anon_user": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.api.endpoints.sessions", "get_anon_session"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/send_code/VAR": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model.unique_code", "UniqueCode"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/reset_password/VAR": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model.unique_code", "UniqueCode"],
+        ["zeeguu.api.utils.abort_handling", "make_error"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/upload_user_activity_data": [
+        [
+          "zeeguu.core.user_activity_hooks.article_interaction_hooks",
+          "distill_article_interactions"
+        ],
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.core.model", "UserActivityData"]
+      ],
+      "/find_or_create_article": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.api.utils", "json_result"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/make_personal_copy": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.personal_copy", "PersonalCopy"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/remove_personal_copy": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.personal_copy", "PersonalCopy"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/is_article_language_supported": [
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.core.model.article", "HTML_TAG_CLEANR"]
+      ],
+      "/user_words": [["zeeguu.api.utils.json_result", "json_result"]],
+      "/top_bookmarks/VAR": [
+        ["zeeguu.core.bookmark_quality", "top_bookmarks"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/learned_bookmarks/VAR": [
+        ["zeeguu.core.bookmark_quality", "top_bookmarks"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/starred_bookmarks/VAR": [
+        ["zeeguu.core.bookmark_quality", "top_bookmarks"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/bookmarks_by_day/VAR": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/bookmarks_by_day": [["zeeguu.api.utils.json_result", "json_result"]],
+      "/bookmarks_for_article/VAR/VAR": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/bookmarks_to_study_for_article/VAR": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/bookmarks_for_article/VAR": [],
+      "/delete_bookmark/VAR": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/report_correct_mini_exercise/VAR": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.core.model", "ExerciseSource"],
+        ["zeeguu.core.model", "ExerciseOutcome"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/star_bookmark/VAR": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/unstar_bookmark/VAR": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/bookmarks_to_study/VAR": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/bookmarks_in_pipeline": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/has_bookmarks_in_pipeline_to_review": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/new_bookmarks_to_study/VAR": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/get_total_bookmarks_in_pipeline": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/get_exercise_log_for_bookmark/VAR": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/report_exercise_outcome": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/similar_words/VAR": [
+        ["zeeguu.core.exercises.similar_words", "similar_words"],
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.api.endpoints", "api"]
+      ],
+      "/exercise_session_start": [
+        ["zeeguu.core.model", "UserExerciseSession"],
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/exercise_session_update": [
+        ["zeeguu.core.model", "UserExerciseSession"],
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.api.endpoints", "db_session"],
+        [
+          "zeeguu.api.endpoints.helpers.activity_sessions",
+          "update_activity_session"
+        ]
+      ],
+      "/exercise_session_end": [
+        ["zeeguu.core.model", "UserExerciseSession"],
+        ["zeeguu.api.endpoints", "db_session"],
+        [
+          "zeeguu.api.endpoints.helpers.activity_sessions",
+          "update_activity_session"
+        ],
+        [
+          "zeeguu.core.emailer.user_activity",
+          "send_user_finished_exercise_session"
+        ]
+      ],
+      "/exercise_session_info/VAR": [
+        ["zeeguu.core.model", "UserExerciseSession"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/is_feature_enabled/VAR": [],
+      "/do_some_spacy": [
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.core.nlp_pipeline", "SpacyWrappers"]
+      ],
+      "/create_confusion_words": [
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.core.nlp_pipeline", "SpacyWrappers"],
+        ["zeeguu.core.nlp_pipeline", "NoiseWordsGenerator"]
+      ],
+      "/annotate_clues": [
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.core.nlp_pipeline", "SpacyWrappers"],
+        ["zeeguu.core.nlp_pipeline", "AutoGECTagging"]
+      ],
+      "/get_shorter_similar_sents_in_article": [
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.core.nlp_pipeline", "SpacyWrappers"],
+        ["zeeguu.core.nlp_pipeline", "ContextReducer"]
+      ],
+      "/get_smaller_context": [
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.core.nlp_pipeline", "SpacyWrappers"],
+        ["zeeguu.core.nlp_pipeline", "ContextReducer"]
+      ],
+      "/upload_own_text": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/own_texts": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.core.model.personal_copy", "PersonalCopy"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/delete_own_text/VAR": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "CohortArticleMap"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/update_own_text/VAR": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/reading_session_start": [
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.api.utils", "json_result"],
+        ["zeeguu.core.model", "UserReadingSession"]
+      ],
+      "/reading_session_update": [
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.api.utils", "json_result"],
+        [
+          "zeeguu.api.endpoints.helpers.activity_sessions",
+          "update_activity_session"
+        ],
+        ["zeeguu.core.model", "UserReadingSession"]
+      ],
+      "/reading_session_end": [
+        ["zeeguu.api.endpoints", "db_session"],
+        [
+          "zeeguu.api.endpoints.helpers.activity_sessions",
+          "update_activity_session"
+        ],
+        ["zeeguu.core.model", "UserReadingSession"]
+      ],
+      "/reading_session_info/VAR": [
+        ["zeeguu.api.utils", "json_result"],
+        ["zeeguu.core.model", "UserReadingSession"]
+      ],
+      "/session/VAR": [
+        ["zeeguu.core.model", "Session"],
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.api.utils.abort_handling", "make_error"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/get_anon_session/VAR": [
+        ["zeeguu.core.model", "Session"],
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/validate": [["zeeguu.api.utils.route_wrappers", "cross_domain"]],
+      "/is_up": [],
+      "/logout_session": [
+        ["zeeguu.core.model", "Session"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/text_to_speech": [],
+      "/mp3_of_full_article": [],
+      "/join_cohort": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.api.endpoints", "api"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/student_info": [["zeeguu.api.utils", "json_result"]],
+      "/cohort_name/VAR": [["zeeguu.core.model", "Cohort"]],
+      "/system_languages": [["zeeguu.core.model", "Language"]],
+      "/available_languages": [["zeeguu.core.model", "Language"]],
+      "/available_native_languages": [["zeeguu.core.model", "Language"]],
+      "/ping": [],
+      "/available_topics": [
+        ["zeeguu.logging", "log"],
+        ["zeeguu.core.model", "Topic"],
+        ["zeeguu.core.model", "TopicSubscription"],
+        ["zeeguu.core.model", "TopicFilter"],
+        ["zeeguu.core.model", "LocalizedTopic"],
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.api.utils.route_wrappers", "cross_domain"],
+        ["zeeguu.api.utils.route_wrappers", "with_session"],
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.api.endpoints", "api"]
+      ],
+      "/get_one_translation/VAR/VAR": [
+        ["zeeguu.api.utils.translator", "get_next_results"],
+        ["zeeguu.core.crowd_translations", "get_own_past_translation"],
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/get_multiple_translations/VAR/VAR": [
+        ["zeeguu.api.utils.translator", "get_next_results"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/update_bookmark/VAR": [
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.core.model", "Text"],
+        ["zeeguu.core.model.user_word", "UserWord"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/contribute_translation/VAR/VAR": [
+        ["zeeguu.api.utils.translator", "contribute_trans"],
+        ["zeeguu.core.model", "Bookmark"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.endpoints", "api"],
+        ["zeeguu.api.endpoints", "db_session"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/basic_translate/VAR/VAR": [
+        ["zeeguu.api.utils.translator", "get_next_results"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/learned_language": [
+        ["zeeguu.api.utils.route_wrappers", "with_session"]
+      ],
+      "/learned_language/VAR": [],
+      "/native_language": [],
+      "/native_language/VAR": [],
+      "/learned_and_native_language": [
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/get_user_details": [
+        ["zeeguu.api.endpoints.feature_toggles", "features_for_user"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/user_settings": [],
+      "/send_feedback": [],
+      "/user_article": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/article_difficulty_feedback": [
+        ["zeeguu.core.model", "Article"],
+        [
+          "zeeguu.core.model.article_difficulty_feedback",
+          "ArticleDifficultyFeedback"
+        ],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/article_opened": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.api.endpoints", "db_session"]
+      ],
+      "/parse_html": [
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/parse_url": [["zeeguu.api.utils.json_result", "json_result"]],
+      "/user_articles/recommended/VAR": [
+        ["zeeguu.core.content_recommender", "article_recommendations_for_user"],
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/user_articles/saved": [
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "PersonalCopy"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/user_articles/topic_filtered": [
+        ["zeeguu.core.content_recommender", "topic_filter_for_user"],
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/user_articles/starred_or_liked": [
+        ["zeeguu.core.model", "UserArticle"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.api.utils.json_result", "json_result"]
+      ],
+      "/cohort_articles": [["zeeguu.api.utils.json_result", "json_result"]],
+      "/user_preferences": [
+        ["zeeguu.api.utils.json_result", "json_result"],
+        ["zeeguu.core.model", "UserPreference"]
+      ],
+      "/save_user_preferences": [["zeeguu.core.model", "UserPreference"]],
+      "/bookmark_counts_by_date": [],
+      "/activity_by_day": [
+        ["zeeguu.api.utils", "json_result"],
+        ["zeeguu.core.user_statistics.activity", "activity_duration_by_day"]
+      ],
+      "/send_article_to_colleague": [
+        ["zeeguu.api.utils.abort_handling", "make_error"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/add_article_to_cohort": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.cohort_article_map", "CohortArticleMap"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/upload_articles/VAR": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model", "Url"],
+        ["zeeguu.core.model.cohort_article_map", "CohortArticleMap"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/get_cohorts_for_article/VAR": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.cohort_article_map", "CohortArticleMap"]
+      ],
+      "/delete_article_from_cohort": [
+        ["zeeguu.api.utils.abort_handling", "make_error"],
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.cohort_article_map", "CohortArticleMap"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/remove_article_from_cohort/VAR/VAR": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.cohort_article_map", "CohortArticleMap"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/cohort_files/VAR": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Article"],
+        ["zeeguu.core.model.cohort_article_map", "CohortArticleMap"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ]
+      ],
+      "/teacher_texts": [["zeeguu.core.model", "Article"]],
+      "/remove_cohort/VAR": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "TeacherCohortMap"],
+        ["zeeguu.core.model", "CohortArticleMap"],
+        ["zeeguu.core.model", "Teacher"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/create_own_cohort": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Language"],
+        ["zeeguu.core.model", "TeacherCohortMap"],
+        ["zeeguu.core.model", "Teacher"],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/update_cohort/VAR": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "Language"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/users_from_cohort/VAR/VAR": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_convert_number_of_days_to_date_interval"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard.helpers",
+          "all_user_info_from_cohort"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ]
+      ],
+      "/cohorts_info": [
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "TeacherCohortMap"],
+        ["zeeguu.core.model", "Teacher"],
+        ["zeeguu.api.endpoints.teacher_dashboard.helpers", "get_cohort_info"]
+      ],
+      "/cohort_info/VAR": [
+        ["zeeguu.api.endpoints.teacher_dashboard.helpers", "get_cohort_info"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ]
+      ],
+      "/add_colleague_to_cohort": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model", "Cohort"],
+        ["zeeguu.core.model", "TeacherCohortMap"],
+        ["zeeguu.core.model", "Teacher"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/remove_user_from_cohort/VAR": [
+        ["zeeguu.core.model", "User"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_user"
+        ],
+        ["zeeguu.core.model", "db"]
+      ],
+      "/is_teacher": [
+        ["zeeguu.api.endpoints.teacher_dashboard._permissions", "is_teacher"],
+        ["zeeguu.api.teacher_dashboard", "api"]
+      ],
+      "/has_permission_for_cohort/VAR": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "has_permission_for_cohort"
+        ],
+        ["zeeguu.api.teacher_dashboard", "api"]
+      ],
+      "/has_permission_for_user_info/VAR": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_user"
+        ]
+      ],
+      "/users_by_teacher/VAR": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard.helpers",
+          "all_user_info_from_cohort"
+        ],
+        ["zeeguu.core.model", "Cohort"]
+      ],
+      "/invite_code_usable/VAR": [["zeeguu.core.model", "Cohort"]],
+      "/basic_user_info/VAR": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_user"
+        ]
+      ],
+      "/user_info": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_user"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard.helpers",
+          "student_info_for_teacher_dashboard"
+        ],
+        ["zeeguu.api.teacher_dashboard", "api"]
+      ],
+      "/cohort_member_bookmarks": [
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/cohort_member_bookmarks/VAR/VAR": [
+        ["zeeguu.core.model", "User"],
+        ["zeeguu.core.model", "Cohort"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_cohort"
+        ],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/user_info/VAR/VAR": [
+        ["zeeguu.core.model", "User"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_convert_number_of_days_to_date_interval"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._permissions",
+          "check_permission_for_user"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard.helpers",
+          "student_info_for_teacher_dashboard"
+        ],
+        ["zeeguu.api.teacher_dashboard", "api"]
+      ],
+      "/student_exercise_correctness": [
+        [
+          "zeeguu.core.user_statistics.exercise_corectness",
+          "exercise_outcome_stats"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/student_exercise_history": [
+        [
+          "zeeguu.core.sql.learner.exercises_history",
+          "exercises_grouped_by_word"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        ["zeeguu.api.teacher_dashboard", "api"],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/student_activity_overview": [
+        [
+          "zeeguu.core.user_statistics.student_overview",
+          "student_activity_overview"
+        ],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        ["zeeguu.api.teacher_dashboard", "api"],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/student_reading_sessions": [
+        ["zeeguu.core.user_statistics.reading_sessions", "reading_sessions"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/student_words_not_studied": [
+        ["zeeguu.core.sql.learner.words", "words_not_studied"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        ["zeeguu.api.utils", "json_result"]
+      ],
+      "/student_learned_words": [
+        ["zeeguu.core.sql.learner.words", "learned_words"],
+        [
+          "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
+          "_get_student_cohort_and_period_from_POST_params"
+        ],
+        ["zeeguu.api.utils", "json_result"]
+      ]
+    }
+  }
+}
