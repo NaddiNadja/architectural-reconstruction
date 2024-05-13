@@ -18,6 +18,18 @@ export default async function Page() {
     },
   };
 
+  const customSorting = () => {
+    const beFiles = ["user_statistics.py", "bookmarks_and_words.py", "user.py"];
+    for (const file of beFiles) {
+      const endpoints = data.backend.files.get(file);
+      if (endpoints) {
+        data.backend.files.delete(file);
+        data.backend.files.set(file, endpoints);
+      }
+    }
+  };
+  customSorting();
+
   const calculateReverse = () => {
     const reverse: ReverseData = {
       frontend: {

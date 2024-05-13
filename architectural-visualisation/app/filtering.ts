@@ -12,50 +12,47 @@ const useFiltering = (data: Data, reverseData: ReverseData) => {
   };
 
   const filterByMethodPrefix = (prefix: string, newData: Data) => {
-    const parenthesisRemoved = prefix.replace(/\(.*\)/, "");
-    for (const [method, _] of arr(data.frontend.api_calls)) {
-      if (method.startsWith(parenthesisRemoved)) {
-        newData = forwardByMethod(method, newData);
-        newData = backwardByMethod(method, newData);
-      }
-    }
+    const method = prefix.replace(/\(.*\)/, "");
+    newData = forwardByMethod(method, newData);
+    newData = backwardByMethod(method, newData);
     return newData;
   };
 
   const filterByBeFilePrefix = (prefix: string, newData: Data) => {
-    for (const [filename, endpoints] of arr(data.backend.files)) {
-      if (filename.startsWith(prefix)) {
-        for (const endpoint of endpoints) {
-          newData = forwardByEndpoint(endpoint, newData);
-          newData = backwardByEndpoint(endpoint, newData);
+    const endpoints = data.backend.files.get(prefix);
+    if (!endpoints) return newData;
+    for (const endpoint of endpoints) {
+      newData = forwardByEndpoint(endpoint, newData);
+      newData = backwardByEndpoint(endpoint, newData);
+    }
+
+    return newData;
+  };
+
+  const filterByEndpointPrefix = (prefix: string, newData: Data) => {
+    newData = forwardByEndpoint(prefix, newData);
+    newData = backwardByEndpoint(prefix, newData);
+
+    return newData;
+  };
+
+  const filterByModulePrefix = (prefix: string, newData: Data) => {
+    const removePoint = "zeeguu." + prefix.substring(1);
+    for (const [pkg, objs] of arr(data.backend.modules)) {
+      if (pkg.startsWith(removePoint)) {
+        newData.backend.modules.set(pkg, objs);
+        for (const obj of objs) {
+          newData = forwardByObj(obj, newData);
+          newData = backwardByObj(pkg, obj, newData);
         }
       }
     }
     return newData;
   };
 
-  const filterByEndpointPrefix = (prefix: string, newData: Data) => {
-    for (const [_, endpoint] of arr(data.frontend.api_calls)) {
-      if (endpoint.startsWith(prefix)) {
-        newData = forwardByEndpoint(endpoint, newData);
-        newData = backwardByEndpoint(endpoint, newData);
-      }
-    }
-    return newData;
-  };
-
-  const filterByModulePrefix = (prefix: string, newData: Data) => {
-    newData.backend.modules.set(prefix, data.backend.modules.get(prefix)!);
-
-    for (const obj of data.backend.modules.get(prefix)!) {
-      newData = forwardByObj(obj, newData);
-      newData = backwardByObj(prefix, obj, newData);
-    }
-    return newData;
-  };
-
   const filterByObjPrefix = (prefix: string, newData: Data) => {
-    const frmlist = [...prefix.split(".")];
+    const removePoint = "zeeguu." + prefix.substring(1);
+    const frmlist = [...removePoint.split(".")];
     const obj = frmlist.pop()!;
     const frm = frmlist.join(".");
 

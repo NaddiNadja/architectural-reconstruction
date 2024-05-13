@@ -8,7 +8,7 @@ const METHOD_W = 290;
 const BE_FILE_X = 930;
 const BE_FILE_Y = 60;
 const MODULE_X = BE_FILE_X + 450;
-const MODULE_Y = 60; // 300;
+const MODULE_Y = 20; // 300;
 const MODULE_W = 400; // 300;
 
 export type Data = {
@@ -55,6 +55,8 @@ export type DrawableBox = {
     | "beEndpoint"
     | "beModule"
     | "beObj";
+  dependencies: number;
+  parent?: DrawableBox;
 };
 
 export type DrawableLine = {
@@ -62,19 +64,20 @@ export type DrawableLine = {
   to: Coord;
 };
 
-type FrontendPackage = Map<string, FrontendPackage>;
+type Package = Map<string, Package>;
 
 const dataTransform = (
-  data: Data
+  data: Data,
+  reverseData: ReverseData,
+  mergeModules = true
 ): { boxes: DrawableBox[]; lines: DrawableLine[] } => {
-  console.log(data);
+  console.log("Transforming data to visualisable:", data);
   const drawableToPos: Map<string, DrawableBox> = new Map();
 
-  const fePackages: FrontendPackage = new Map();
+  const fePackages: Package = new Map();
   const feFiles: DrawableBox[] = [];
-  const methodCalls: string[] = [];
 
-  for (const [filename, methods] of arr(data.frontend.files)) {
+  for (const [filename, _] of arr(data.frontend.files)) {
     const parts = filename.split("/");
     let cur = fePackages;
     for (let i = 1; i < parts.length; i++) {
@@ -83,13 +86,10 @@ const dataTransform = (
       }
       cur = cur.get(parts[i])!;
     }
-    for (const method of methods) {
-      methodCalls.push(method);
-    }
   }
 
   const buildRecursively = (
-    cur: FrontendPackage,
+    cur: Package,
     x: number,
     y: number,
     prefix: string,
@@ -116,7 +116,9 @@ const dataTransform = (
       position: { x, y, h: height, w: 400 - x * 2 },
       clickable: true,
       type: "fePackage",
+      dependencies: 0,
     };
+    children.forEach(child => (child.parent = box));
     drawableToPos.set(prefix + title, box);
     feFiles.push(box);
     return box;
@@ -139,63 +141,40 @@ const dataTransform = (
 
   feFiles.reverse();
 
-  // filter the methods to only include each method once
-  const uniqueMethods = methodCalls.filter(
-    (method, index, self) => self.indexOf(method) === index
-  );
-
-  const zeeguuApiMethods = [];
-  let top = METHOD_Y + 60;
-  for (const methodName of uniqueMethods) {
-    const method: DrawableBox = {
-      title: methodName + "()",
-      position: { x: METHOD_X + 20, y: top, h: 30, w: METHOD_W - 2 * 20 },
-      type: "feMethod",
-    };
-    drawableToPos.set(methodName, method);
-    top += 40;
-    zeeguuApiMethods.push(method);
-  }
-  const zeeguuApiContainer: DrawableBox = {
-    title: "«object» Zeeguu_API.prototype",
-    position: {
-      x: METHOD_X,
-      y: METHOD_Y,
-      h: top - METHOD_Y + 10,
-      w: METHOD_W,
-    },
-    type: "container",
-  };
-  feContainer.position.h = Math.max(
-    feContainer.position.h,
-    zeeguuApiContainer.position.h + 50 + METHOD_Y
-  );
-
-  const endpointToBeFile = new Map<string, string>();
   const beFiles = [];
   const endpoints = [];
-  top = BE_FILE_Y + 60;
+  let top = BE_FILE_Y + 60;
   for (const [filename, eps] of arr(data.backend.files)) {
     const beFile: DrawableBox = {
       title: filename,
       position: { x: BE_FILE_X + 20, y: top, h: eps.length * 40 + 50, w: 340 },
       type: "beFile",
+      dependencies: 0,
     };
-    drawableToPos.set(filename, beFile);
     top += 40;
+    let found = false;
     for (const ep of eps) {
+      if (!reverseData.frontend.apiCallToMethod.has(ep)) continue;
+      found = true;
       const endpoint: DrawableBox = {
         title: ep,
         position: { x: beFile.position.x + 20, y: top, h: 30, w: 300 },
         type: "beEndpoint",
+        dependencies: 0,
+        parent: beFile,
       };
-      endpointToBeFile.set(ep, filename);
       drawableToPos.set(ep, endpoint);
       endpoints.push(endpoint);
       top += 40;
     }
-    top += 30;
-    beFiles.push(beFile);
+    beFile.position.h = top - beFile.position.y + 10;
+    if (found) {
+      top += 30;
+      drawableToPos.set(filename, beFile);
+      beFiles.push(beFile);
+    } else {
+      top -= 40;
+    }
   }
   const beContainer: DrawableBox = {
     title: "zeeguu.api.endpoints",
@@ -206,53 +185,112 @@ const dataTransform = (
       w: 380,
     },
     type: "container",
+    dependencies: 0,
   };
 
-  const modules = [];
-  const objects = [];
-  top = MODULE_Y;
-  for (const [path, objs] of arr(data.backend.modules)) {
-    const beModule: DrawableBox = {
-      title: path,
-      position: {
-        x: MODULE_X + 20,
-        y: top,
-        h: objs.length * 40 + 50,
-        w: MODULE_W - 2 * 20,
-      },
-      type: "beModule",
-    };
-    drawableToPos.set(path, beModule);
-    top += 40;
-    for (const obj of objs) {
-      const object: DrawableBox = {
-        title: obj,
-        position: {
-          x: beModule.position.x + 20,
-          y: top,
-          h: 30,
-          w: beModule.position.w - 40,
-        },
-        prefix: path + ".",
-        type: "beObj",
+  const zeeguuApiMethods = [];
+  top = METHOD_Y + 60;
+  for (const endpointBox of endpoints) {
+    const methodNames = reverseData.frontend.apiCallToMethod.get(
+      endpointBox.title
+    );
+    if (!methodNames) continue;
+    for (const methodName of methodNames) {
+      if (!data.frontend.api_calls.has(methodName)) continue;
+      const method: DrawableBox = {
+        title: methodName + "()",
+        position: { x: METHOD_X + 20, y: top, h: 30, w: METHOD_W - 2 * 20 },
+        type: "feMethod",
+        dependencies: 0,
       };
-      drawableToPos.set(obj, object);
-      objects.push(object);
+      drawableToPos.set(methodName, method);
       top += 40;
+      zeeguuApiMethods.push(method);
     }
-    top += 30;
-    modules.push(beModule);
   }
-  const moduleContainer: DrawableBox = {
-    title: "Server modules (invisible)",
+  const zeeguuApiContainer: DrawableBox = {
+    title: "«object» Zeeguu_API.prototype",
     position: {
-      x: MODULE_X,
-      y: MODULE_Y,
-      h: top - MODULE_Y,
-      w: MODULE_W,
+      x: METHOD_X,
+      y: METHOD_Y,
+      h: top - METHOD_Y + 10,
+      w: METHOD_W,
     },
     type: "container",
+    dependencies: 0,
   };
+  feContainer.position.h = Math.max(
+    feContainer.position.h,
+    zeeguuApiContainer.position.h + 50 + METHOD_Y
+  );
+
+  const modules: DrawableBox[] = [];
+  top = MODULE_Y;
+
+  const beModulePackages: Package = new Map();
+
+  for (const [path, objs] of arr(data.backend.modules)) {
+    const parts = path.split(".");
+    let cur = beModulePackages;
+    for (let i = 0; i < parts.length; i++) {
+      if (!cur.has(parts[i])) {
+        cur.set(parts[i], new Map());
+      }
+      cur = cur.get(parts[i])!;
+    }
+    for (const obj of objs) {
+      if (!cur.has(obj)) {
+        cur.set(obj, new Map());
+      }
+    }
+  }
+
+  const buildRecursivelyModules = (
+    cur: Package,
+    x: number,
+    y: number,
+    prefix: string,
+    title: string
+  ): DrawableBox => {
+    let height = 30;
+    const children = [];
+    for (const [pkg, next] of arr(cur)) {
+      const sub = buildRecursivelyModules(
+        next,
+        x + 20,
+        y + height + 10,
+        prefix + title + ".",
+        pkg
+      );
+      children.push(sub);
+      height += sub.position.h + (sub.position.h ? 10 : 0);
+      if (prefix === "") height += 10;
+    }
+    if (children.length > 0) height += 20;
+    const box: DrawableBox = {
+      title,
+      prefix,
+      position: { x, y, h: height, w: MODULE_W - (x - MODULE_X) * 2 },
+      clickable: true,
+      type: children.length === 0 && !mergeModules ? "beObj" : "beModule",
+      dependencies: 0,
+    };
+    children.forEach(child => (child.parent = box));
+    drawableToPos.set("zeeguu" + prefix + title, box);
+    if (!mergeModules || children.length > 0) modules.push(box);
+    if (children.length === 0 && mergeModules) box.position.h = 0;
+    return box;
+  };
+  const moduleContainer = buildRecursivelyModules(
+    beModulePackages.get("zeeguu") || beModulePackages,
+    MODULE_X,
+    MODULE_Y,
+    "",
+    ""
+  );
+  modules.pop();
+  moduleContainer.type = "container";
+  modules.reverse();
 
   const backendContainer: DrawableBox = {
     title: "Python backend",
@@ -266,6 +304,7 @@ const dataTransform = (
       w: 910,
     },
     type: "container",
+    dependencies: 0,
   };
 
   const getFromPos = (box: DrawableBox) => {
@@ -282,7 +321,6 @@ const dataTransform = (
   for (const [filename, methods] of arr(data.frontend.files)) {
     const from = drawableToPos.get(filename);
     if (!from) {
-      console.log("Method not found", filename);
       continue;
     }
     for (const method of methods) {
@@ -290,6 +328,7 @@ const dataTransform = (
       if (!to) {
         continue;
       }
+      to.dependencies++;
       lines.push({ from: getFromPos(from), to: getToPos(to) });
     }
   }
@@ -302,6 +341,7 @@ const dataTransform = (
     if (!to) {
       continue;
     }
+    to.dependencies += from.dependencies;
     lines.push({ from: getFromPos(from), to: getToPos(to) });
   }
   for (const [endpoint, imports] of arr(data.backend.endpoint_imports)) {
@@ -309,11 +349,13 @@ const dataTransform = (
     if (!from) {
       continue;
     }
-    for (const [_, imported] of imports) {
-      const to = drawableToPos.get(imported);
+    for (const [pkg, obj] of imports) {
+      let to = drawableToPos.get(pkg + "." + obj);
       if (!to) {
         continue;
       }
+      if (mergeModules) to = to.parent!;
+      to.dependencies += from.dependencies;
       lines.push({ from: getFromPos(from), to: getToPos(to) });
     }
   }
@@ -328,7 +370,6 @@ const dataTransform = (
       ...beFiles,
       ...endpoints,
       ...modules,
-      ...objects,
     ],
     lines,
   };

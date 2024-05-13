@@ -23,11 +23,23 @@ rect {
   fill: white;
 }
 rect.clickable:hover {
-  fill: lightgrey;
+  fill: hsl(30, 72%, 90%);
+}
+
+rect.selected {
+  fill: hsl(30, 59%, 82%);
+}
+rect.selected:hover {
+  fill: hsl(30, 56%, 79%);
 }
 
 .clickable {
   cursor: pointer;
+}
+
+rect.shade {
+  fill: rgb(165, 107, 231);
+  pointer-events: none;
 }
 
 text {

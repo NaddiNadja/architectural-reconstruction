@@ -507,30 +507,30 @@
     },
     "modules": {
       "zeeguu.core.model": [
-        "UserReadingSession",
-        "db",
-        "Bookmark",
-        "Text",
-        "UserExerciseSession",
         "Session",
-        "Cohort",
-        "TeacherCohortMap",
-        "Article",
-        "Topic",
-        "Url",
-        "TopicSubscription",
-        "TopicFilter",
-        "Language",
         "ExerciseSource",
-        "LocalizedTopic",
-        "UserArticle",
-        "UserPreference",
-        "PersonalCopy",
-        "CohortArticleMap",
-        "Teacher",
         "User",
+        "PersonalCopy",
+        "ExerciseOutcome",
+        "UserPreference",
+        "Cohort",
+        "UserArticle",
+        "TopicFilter",
+        "LocalizedTopic",
+        "Bookmark",
         "UserActivityData",
-        "ExerciseOutcome"
+        "Text",
+        "TeacherCohortMap",
+        "db",
+        "UserExerciseSession",
+        "UserReadingSession",
+        "Language",
+        "CohortArticleMap",
+        "TopicSubscription",
+        "Url",
+        "Topic",
+        "Article",
+        "Teacher"
       ],
       "zeeguu.api.utils.abort_handling": ["make_error"],
       "zeeguu.api.endpoints": ["api", "db_session"],
@@ -553,13 +553,13 @@
         "send_user_finished_exercise_session"
       ],
       "zeeguu.core.nlp_pipeline": [
-        "AutoGECTagging",
+        "SpacyWrappers",
         "ContextReducer",
-        "NoiseWordsGenerator",
-        "SpacyWrappers"
+        "AutoGECTagging",
+        "NoiseWordsGenerator"
       ],
-      "zeeguu.api.utils.route_wrappers": ["with_session", "cross_domain"],
-      "zeeguu.api.utils.translator": ["contribute_trans", "get_next_results"],
+      "zeeguu.api.utils.route_wrappers": ["cross_domain", "with_session"],
+      "zeeguu.api.utils.translator": ["get_next_results", "contribute_trans"],
       "zeeguu.core.crowd_translations": ["get_own_past_translation"],
       "zeeguu.core.model.user_word": ["UserWord"],
       "zeeguu.api.endpoints.feature_toggles": ["features_for_user"],
@@ -573,21 +573,20 @@
       "zeeguu.core.user_statistics.activity": ["activity_duration_by_day"],
       "zeeguu.core.model.cohort_article_map": ["CohortArticleMap"],
       "zeeguu.api.endpoints.teacher_dashboard._permissions": [
+        "has_permission_for_cohort",
         "check_permission_for_user",
         "check_permission_for_cohort",
-        "has_permission_for_cohort",
         "is_teacher"
       ],
       "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters": [
-        "_get_student_cohort_and_period_from_POST_params",
-        "_convert_number_of_days_to_date_interval"
+        "_convert_number_of_days_to_date_interval",
+        "_get_student_cohort_and_period_from_POST_params"
       ],
       "zeeguu.api.endpoints.teacher_dashboard.helpers": [
-        "student_info_for_teacher_dashboard",
+        "all_user_info_from_cohort",
         "get_cohort_info",
-        "all_user_info_from_cohort"
+        "student_info_for_teacher_dashboard"
       ],
-      "zeeguu.api.teacher_dashboard": ["api"],
       "zeeguu.core.user_statistics.exercise_corectness": [
         "exercise_outcome_stats"
       ],
@@ -1117,14 +1116,14 @@
       ],
       "/is_teacher": [
         ["zeeguu.api.endpoints.teacher_dashboard._permissions", "is_teacher"],
-        ["zeeguu.api.teacher_dashboard", "api"]
+        ["zeeguu.api.endpoints", "api"]
       ],
       "/has_permission_for_cohort/VAR": [
         [
           "zeeguu.api.endpoints.teacher_dashboard._permissions",
           "has_permission_for_cohort"
         ],
-        ["zeeguu.api.teacher_dashboard", "api"]
+        ["zeeguu.api.endpoints", "api"]
       ],
       "/has_permission_for_user_info/VAR": [
         [
@@ -1159,7 +1158,7 @@
           "zeeguu.api.endpoints.teacher_dashboard.helpers",
           "student_info_for_teacher_dashboard"
         ],
-        ["zeeguu.api.teacher_dashboard", "api"]
+        ["zeeguu.api.endpoints", "api"]
       ],
       "/cohort_member_bookmarks": [
         [
@@ -1195,7 +1194,7 @@
           "zeeguu.api.endpoints.teacher_dashboard.helpers",
           "student_info_for_teacher_dashboard"
         ],
-        ["zeeguu.api.teacher_dashboard", "api"]
+        ["zeeguu.api.endpoints", "api"]
       ],
       "/student_exercise_correctness": [
         [
@@ -1217,7 +1216,7 @@
           "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
           "_get_student_cohort_and_period_from_POST_params"
         ],
-        ["zeeguu.api.teacher_dashboard", "api"],
+        ["zeeguu.api.endpoints", "api"],
         ["zeeguu.api.utils", "json_result"]
       ],
       "/student_activity_overview": [
@@ -1229,7 +1228,7 @@
           "zeeguu.api.endpoints.teacher_dashboard._common_api_parameters",
           "_get_student_cohort_and_period_from_POST_params"
         ],
-        ["zeeguu.api.teacher_dashboard", "api"],
+        ["zeeguu.api.endpoints", "api"],
         ["zeeguu.api.utils", "json_result"]
       ],
       "/student_reading_sessions": [

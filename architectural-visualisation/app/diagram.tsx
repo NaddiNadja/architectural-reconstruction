@@ -16,6 +16,8 @@ interface Props {
 const Diagram = ({ data, reverseData }: Props) => {
   const [boxes, setBoxes] = React.useState<DrawableBox[]>([]);
   const [lines, setLines] = React.useState<DrawableLine[]>([]);
+  const [selected, setSelected] = React.useState<string>("");
+  const [mergeBackendModules, setMergeBackendModules] = React.useState(false);
   const {
     filterByFilenamePrefix,
     filterByMethodPrefix,
@@ -26,14 +28,19 @@ const Diagram = ({ data, reverseData }: Props) => {
   } = useFiltering(data, reverseData);
 
   React.useEffect(() => {
-    const { boxes, lines } = dataTransform(data);
+    const { boxes, lines } = dataTransform(data, reverseData);
     setBoxes(boxes);
     setLines(lines);
   }, [data]);
 
   const filterData = (prefix: string, type?: string) => {
+    setSelected(prefix);
     if (prefix === "") {
-      const { boxes, lines } = dataTransform(data);
+      const { boxes, lines } = dataTransform(
+        data,
+        reverseData,
+        mergeBackendModules
+      );
       setBoxes(boxes);
       setLines(lines);
       return;
@@ -49,6 +56,7 @@ const Diagram = ({ data, reverseData }: Props) => {
         endpoint_imports: new Map(),
       },
     };
+    window.scrollTo(0, 0);
 
     const types = [
       "fePackage",
@@ -69,10 +77,18 @@ const Diagram = ({ data, reverseData }: Props) => {
 
     newData = methods[types.indexOf(type || "")](prefix, newData);
 
-    const { boxes, lines } = dataTransform(newData);
+    const { boxes, lines } = dataTransform(
+      newData,
+      reverseData,
+      mergeBackendModules
+    );
     setBoxes(boxes);
     setLines(lines);
   };
+
+  React.useEffect(() => {
+    filterData("");
+  }, [mergeBackendModules]);
 
   return (
     <svg viewBox="-50 -60 2000 10000" width="2000px" height="10000px">
@@ -91,7 +107,7 @@ const Diagram = ({ data, reverseData }: Props) => {
       </defs>
       <g>
         <rect
-          onClick={() => filterData("")}
+          onClick={e => filterData("")}
           width="100px"
           height="30px"
           x="-20"
@@ -101,13 +117,24 @@ const Diagram = ({ data, reverseData }: Props) => {
         <text x="-10" y="-40">
           Reset
         </text>
+        <rect
+          onClick={e => setMergeBackendModules(prev => !prev)}
+          width="200px"
+          height="30px"
+          x="100"
+          y="-60"
+          className={`clickable ${mergeBackendModules ? "selected" : ""}`}
+        />
+        <text x="110" y="-40">
+          Merge backend modules
+        </text>
       </g>
       {boxes.map((element, i) => (
         <g key={element.title + i}>
           <rect
             onClick={
               element.type !== "container"
-                ? () =>
+                ? e =>
                     filterData(
                       (element.prefix ?? "") + element.title,
                       element.type
@@ -119,17 +146,45 @@ const Diagram = ({ data, reverseData }: Props) => {
             x={element.position.x}
             y={element.position.y}
             z={element.position.x}
-            className={element.type !== "container" ? "clickable" : undefined}
+            className={
+              element.type !== "container"
+                ? `clickable ${
+                    (element.prefix ?? "") + element.title === selected
+                      ? "selected"
+                      : ""
+                  }`
+                : undefined
+            }
+          />
+          <rect
+            width={element.position.w}
+            height={element.position.h}
+            x={element.position.x}
+            y={element.position.y}
+            style={{
+              opacity: (1 / 20) * element.dependencies,
+            }}
+            className="shade"
           />
           <text x={element.position.x + 10} y={element.position.y + 20}>
-            {element.title}
+            {element.title}{" "}
           </text>
+          {element.dependencies > 0 && (
+            <text
+              x={element.position.x + element.position.w - 10}
+              y={element.position.y + 19}
+              textAnchor="end"
+              style={{ fontSize: "10px" }}
+            >
+              ({element.dependencies})
+            </text>
+          )}
         </g>
       ))}
       {lines.map((line, i) => (
         <line
           key={i}
-          marker-end="url(#arrow)"
+          markerEnd="url(#arrow)"
           x1={line.from.x}
           y1={line.from.y}
           x2={line.to.x}

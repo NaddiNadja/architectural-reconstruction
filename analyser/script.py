@@ -1,6 +1,5 @@
 import os, re, json
-from collections import defaultdict, deque
-from pyvis.network import Network
+from collections import defaultdict
 
 fe_dir = "C:/Users/nadja/Documents/Work/zeeguu-web"
 be_dir = "C:/Users/nadja/Documents/Work/zeeguu-api"
@@ -16,9 +15,9 @@ def analyse_endpoints():
     for i in matches:
       frm = i[0]
       if frm.startswith("..."):
-        frm = ".".join(endpoint_module.split(".")[:-2]) + cur_dir.replace("\\", ".") + frm[2:]
+        frm = ".".join((endpoint_module + cur_dir.replace("\\", ".")).split(".")[:-2]) + frm[2:]
       elif frm.startswith(".."):
-        frm = ".".join(endpoint_module.split(".")[:-1]) + cur_dir.replace("\\", ".") + frm[1:]
+        frm = ".".join((endpoint_module + cur_dir.replace("\\", ".")).split(".")[:-1]) + frm[1:]
       elif frm.startswith("."):
         frm = endpoint_module + cur_dir.replace("\\", ".") + frm
       if frm.endswith("."): frm = frm[:-1]
