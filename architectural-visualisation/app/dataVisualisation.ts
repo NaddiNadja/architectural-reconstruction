@@ -1,3 +1,5 @@
+import { arr } from "./util";
+
 const FE_FILE_X = 0;
 const FE_FILE_Y = 0; // 900;
 const METHOD_X = FE_FILE_X + 500;
@@ -20,6 +22,17 @@ export type Data = {
     endpoint_imports: Map<string, string[][]>;
   };
 };
+export type ReverseData = {
+  frontend: {
+    methodToFiles: Map<string, string[]>;
+    apiCallToMethod: Map<string, string[]>;
+  };
+  backend: {
+    endpointToFiles: Map<string, string[]>;
+    objToEndpoint: Map<string, string[]>;
+    objToModule: Map<string, string>;
+  };
+};
 
 type Coord = {
   x: number;
@@ -34,6 +47,14 @@ export type DrawableBox = {
     w: number;
   };
   clickable?: boolean;
+  type:
+    | "container"
+    | "fePackage"
+    | "feMethod"
+    | "beFile"
+    | "beEndpoint"
+    | "beModule"
+    | "beObj";
 };
 
 export type DrawableLine = {
@@ -53,7 +74,7 @@ const dataTransform = (
   const feFiles: DrawableBox[] = [];
   const methodCalls: string[] = [];
 
-  for (const [filename, methods] of data.frontend.files) {
+  for (const [filename, methods] of arr(data.frontend.files)) {
     const parts = filename.split("/");
     let cur = fePackages;
     for (let i = 1; i < parts.length; i++) {
@@ -76,7 +97,7 @@ const dataTransform = (
   ): DrawableBox => {
     let height = 30;
     const children = [];
-    for (const [pkg, _] of cur) {
+    for (const [pkg, _] of arr(cur)) {
       const sub = buildRecursively(
         cur.get(pkg)!,
         x + 20,
@@ -94,6 +115,7 @@ const dataTransform = (
       prefix,
       position: { x, y, h: height, w: 400 - x * 2 },
       clickable: true,
+      type: "fePackage",
     };
     drawableToPos.set(prefix + title, box);
     feFiles.push(box);
@@ -113,6 +135,7 @@ const dataTransform = (
   feContainer.position.y = FE_FILE_Y;
   feContainer.position.h += 70;
   feContainer.position.w = METHOD_X + METHOD_W + 60;
+  feContainer.type = "container";
 
   feFiles.reverse();
 
@@ -127,6 +150,7 @@ const dataTransform = (
     const method: DrawableBox = {
       title: methodName + "()",
       position: { x: METHOD_X + 20, y: top, h: 30, w: METHOD_W - 2 * 20 },
+      type: "feMethod",
     };
     drawableToPos.set(methodName, method);
     top += 40;
@@ -140,6 +164,7 @@ const dataTransform = (
       h: top - METHOD_Y + 10,
       w: METHOD_W,
     },
+    type: "container",
   };
   feContainer.position.h = Math.max(
     feContainer.position.h,
@@ -150,10 +175,11 @@ const dataTransform = (
   const beFiles = [];
   const endpoints = [];
   top = BE_FILE_Y + 60;
-  for (const [filename, eps] of data.backend.files) {
+  for (const [filename, eps] of arr(data.backend.files)) {
     const beFile: DrawableBox = {
       title: filename,
       position: { x: BE_FILE_X + 20, y: top, h: eps.length * 40 + 50, w: 340 },
+      type: "beFile",
     };
     drawableToPos.set(filename, beFile);
     top += 40;
@@ -161,6 +187,7 @@ const dataTransform = (
       const endpoint: DrawableBox = {
         title: ep,
         position: { x: beFile.position.x + 20, y: top, h: 30, w: 300 },
+        type: "beEndpoint",
       };
       endpointToBeFile.set(ep, filename);
       drawableToPos.set(ep, endpoint);
@@ -178,13 +205,14 @@ const dataTransform = (
       h: top - BE_FILE_Y + 10,
       w: 380,
     },
+    type: "container",
   };
 
   const modules = [];
   const objects = [];
   top = MODULE_Y;
-  for (const [path, objs] of data.backend.modules) {
-    const module: DrawableBox = {
+  for (const [path, objs] of arr(data.backend.modules)) {
+    const beModule: DrawableBox = {
       title: path,
       position: {
         x: MODULE_X + 20,
@@ -192,34 +220,38 @@ const dataTransform = (
         h: objs.length * 40 + 50,
         w: MODULE_W - 2 * 20,
       },
+      type: "beModule",
     };
-    drawableToPos.set(path, module);
+    drawableToPos.set(path, beModule);
     top += 40;
     for (const obj of objs) {
       const object: DrawableBox = {
         title: obj,
         position: {
-          x: module.position.x + 20,
+          x: beModule.position.x + 20,
           y: top,
           h: 30,
-          w: module.position.w - 40,
+          w: beModule.position.w - 40,
         },
+        prefix: path + ".",
+        type: "beObj",
       };
       drawableToPos.set(obj, object);
       objects.push(object);
       top += 40;
     }
     top += 30;
-    modules.push(module);
+    modules.push(beModule);
   }
   const moduleContainer: DrawableBox = {
-    title: "Server modules",
+    title: "Server modules (invisible)",
     position: {
       x: MODULE_X,
       y: MODULE_Y,
       h: top - MODULE_Y,
       w: MODULE_W,
     },
+    type: "container",
   };
 
   const backendContainer: DrawableBox = {
@@ -233,6 +265,7 @@ const dataTransform = (
       ),
       w: 910,
     },
+    type: "container",
   };
 
   const getFromPos = (box: DrawableBox) => {
@@ -246,7 +279,7 @@ const dataTransform = (
   };
 
   const lines = [];
-  for (const [filename, methods] of data.frontend.files) {
+  for (const [filename, methods] of arr(data.frontend.files)) {
     const from = drawableToPos.get(filename);
     if (!from) {
       console.log("Method not found", filename);
@@ -260,7 +293,7 @@ const dataTransform = (
       lines.push({ from: getFromPos(from), to: getToPos(to) });
     }
   }
-  for (const [method, endpoint] of data.frontend.api_calls) {
+  for (const [method, endpoint] of arr(data.frontend.api_calls)) {
     const from = drawableToPos.get(method);
     if (!from) {
       continue;
@@ -271,7 +304,7 @@ const dataTransform = (
     }
     lines.push({ from: getFromPos(from), to: getToPos(to) });
   }
-  for (const [endpoint, imports] of data.backend.endpoint_imports) {
+  for (const [endpoint, imports] of arr(data.backend.endpoint_imports)) {
     const from = drawableToPos.get(endpoint);
     if (!from) {
       continue;

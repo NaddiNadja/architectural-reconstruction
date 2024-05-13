@@ -2,13 +2,28 @@
 import React from "react";
 import dataTransform, {
   Data,
+  ReverseData,
   DrawableBox,
   DrawableLine,
 } from "./dataVisualisation";
+import useFiltering from "./filtering";
 
-const Diagram = ({ data }: { data: Data }) => {
+interface Props {
+  data: Data;
+  reverseData: ReverseData;
+}
+
+const Diagram = ({ data, reverseData }: Props) => {
   const [boxes, setBoxes] = React.useState<DrawableBox[]>([]);
   const [lines, setLines] = React.useState<DrawableLine[]>([]);
+  const {
+    filterByFilenamePrefix,
+    filterByMethodPrefix,
+    filterByBeFilePrefix,
+    filterByEndpointPrefix,
+    filterByModulePrefix,
+    filterByObjPrefix,
+  } = useFiltering(data, reverseData);
 
   React.useEffect(() => {
     const { boxes, lines } = dataTransform(data);
@@ -16,15 +31,14 @@ const Diagram = ({ data }: { data: Data }) => {
     setLines(lines);
   }, [data]);
 
-  const filterDataByFilename = (prefix: string) => {
+  const filterData = (prefix: string, type?: string) => {
     if (prefix === "") {
       const { boxes, lines } = dataTransform(data);
       setBoxes(boxes);
       setLines(lines);
       return;
     }
-
-    const newData: Data = {
+    let newData: Data = {
       frontend: {
         files: new Map(),
         api_calls: new Map(),
@@ -35,51 +49,26 @@ const Diagram = ({ data }: { data: Data }) => {
         endpoint_imports: new Map(),
       },
     };
-    for (const [filename, methodCalls] of data.frontend.files) {
-      if (filename.startsWith(prefix)) {
-        newData.frontend.files.set(filename, methodCalls);
-        for (const methodCall of methodCalls) {
-          const api_call = data.frontend.api_calls.get(methodCall);
-          if (api_call) {
-            newData.frontend.api_calls.set(methodCall, api_call);
-            const backendFile = [...data.backend.files.keys()].find(
-              (filename) => data.backend.files.get(filename)!.includes(api_call)
-            );
-            if (backendFile) {
-              if (!newData.backend.files.has(backendFile)) {
-                newData.backend.files.set(backendFile, []);
-              }
-              if (!newData.backend.files.get(backendFile)!.includes(api_call))
-                newData.backend.files.get(backendFile)!.push(api_call);
 
-              const imports = data.backend.endpoint_imports.get(api_call);
-              if (imports) {
-                for (const [frm, module] of imports) {
-                  if (!newData.backend.modules.has(frm)) {
-                    newData.backend.modules.set(frm, []);
-                  }
-                  if (!newData.backend.modules.get(frm)!.includes(module))
-                    newData.backend.modules.get(frm)!.push(module);
+    const types = [
+      "fePackage",
+      "feMethod",
+      "beFile",
+      "beEndpoint",
+      "beModule",
+      "beObj",
+    ];
+    const methods = [
+      filterByFilenamePrefix,
+      filterByMethodPrefix,
+      filterByBeFilePrefix,
+      filterByEndpointPrefix,
+      filterByModulePrefix,
+      filterByObjPrefix,
+    ];
 
-                  if (!newData.backend.endpoint_imports.has(api_call)) {
-                    newData.backend.endpoint_imports.set(api_call, []);
-                  }
-                  if (
-                    !newData.backend.endpoint_imports
-                      .get(api_call)!
-                      .includes([frm, module])
-                  ) {
-                    newData.backend.endpoint_imports
-                      .get(api_call)!
-                      .push([frm, module]);
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    newData = methods[types.indexOf(type || "")](prefix, newData);
+
     const { boxes, lines } = dataTransform(newData);
     setBoxes(boxes);
     setLines(lines);
@@ -102,20 +91,14 @@ const Diagram = ({ data }: { data: Data }) => {
       </defs>
       <g>
         <rect
-          onClick={() => filterDataByFilename("")}
+          onClick={() => filterData("")}
           width="100px"
           height="30px"
           x="-20"
           y="-60"
           className="clickable"
         />
-        <text
-          onClick={() => filterDataByFilename("")}
-          x="-10"
-          y="-40"
-          style={{ cursor: "pointer" }}
-          className="clickable"
-        >
+        <text x="-10" y="-40">
           Reset
         </text>
       </g>
@@ -123,9 +106,12 @@ const Diagram = ({ data }: { data: Data }) => {
         <g key={element.title + i}>
           <rect
             onClick={
-              element.clickable
+              element.type !== "container"
                 ? () =>
-                    filterDataByFilename((element.prefix ?? "") + element.title)
+                    filterData(
+                      (element.prefix ?? "") + element.title,
+                      element.type
+                    )
                 : undefined
             }
             width={element.position.w}
@@ -133,20 +119,9 @@ const Diagram = ({ data }: { data: Data }) => {
             x={element.position.x}
             y={element.position.y}
             z={element.position.x}
-            className={element.clickable ? "clickable" : undefined}
+            className={element.type !== "container" ? "clickable" : undefined}
           />
-          <text
-            onClick={
-              element.clickable
-                ? () =>
-                    filterDataByFilename((element.prefix ?? "") + element.title)
-                : undefined
-            }
-            style={{ cursor: element.clickable ? "pointer" : "default" }}
-            x={element.position.x + 10}
-            y={element.position.y + 20}
-            className={element.clickable ? "clickable" : undefined}
-          >
+          <text x={element.position.x + 10} y={element.position.y + 20}>
             {element.title}
           </text>
         </g>
